@@ -1,0 +1,1 @@
+web: java -jar target/out/artifacts/RMUDServer_jar/RMUD.jar
