@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="RMUD" target="1.15" />
+      <module name="RMUD" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>
