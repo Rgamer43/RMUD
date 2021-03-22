@@ -28,7 +28,7 @@ public class Client {
     public static boolean graphicsInitted = false;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        socket = new Socket("192.168.4.22", 7777);
+        socket = new Socket("https://warm-retreat-76151.herokuapp.com/", 8080); //Local IP: 192.168.4.22
         //System.out.println("Connecting...");
 
         oos = new ObjectOutputStream(socket.getOutputStream());
