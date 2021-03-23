@@ -1,1 +1,1 @@
-web: java -jar RMUD.jar
+web: java -jar target/RMUD.jar
