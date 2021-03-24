@@ -7,7 +7,7 @@ public class ConnectionAccepter extends Thread{
     public void run() {
         try {
             ServerSocket ss = new ServerSocket(8080);
-            System.out.println("$PORT is " + System.getenv("PORT"));
+            System.out.println("$PORT is " + System.getProperty("$PORT"));
 
             while (true) {
                 Socket socket = null;
