@@ -8,7 +8,7 @@
     <artifactId>RMUD</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
 
     <build>
@@ -28,6 +28,24 @@
 <!--                <artifactId>heroku-maven-plugin</artifactId>-->
 <!--                <version>3.0.3</version>-->
 <!--            </plugin>-->
+            <plugin>
+
+                <!-- Building an executable jar -->
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+
+                            <!-- give full qualified name of your main class-->
+                            <mainClass>Server</mainClass>
+
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
