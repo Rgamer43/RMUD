@@ -6,9 +6,9 @@ import java.net.*;
 public class ConnectionAccepter extends Thread{
     public void run() {
         try {
-            ServerSocket ss = new ServerSocket(8080);
-            ss.bind(new InetSocketAddress("warm-retreat-76151.herokuapp.com", 8080));
-            //System.out.println("$PORT is " + System.getProperty("$PORT"));
+            ServerSocket ss = new ServerSocket();
+            ss.bind(new InetSocketAddress("warm-retreat-76151.herokuapp.com", Integer.parseInt(System.getenv("$PORT"))));
+            System.out.println("$PORT is " + System.getenv("$PORT"));
 
             while (true) {
                 Socket socket = null;
