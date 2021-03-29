@@ -1,1 +1,1 @@
-web: java -jar --enable-preview  target/RMUD-1.0-SNAPSHOT.jar
+web: java -jar --enable-preview -DPORT=$PORT target/RMUD-1.0-SNAPSHOT.jar
