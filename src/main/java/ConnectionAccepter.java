@@ -8,7 +8,7 @@ public class ConnectionAccepter extends Thread{
         try {
             ServerSocket ss = new ServerSocket();
             ss.bind(new InetSocketAddress(ss.getInetAddress(), Integer.valueOf(System.getenv("PORT"))));
-            System.out.println("$PORT is " + System.getenv("$PORT"));
+            System.out.println("PORT is " + System.getenv("PORT"));
 
             while (true) {
                 Socket socket = null;
