@@ -1,5 +1,6 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.*;
 
@@ -11,18 +12,23 @@ public class ConnectionAccepter extends Thread{
             ss.bind(new InetSocketAddress(ss.getInetAddress(), Integer.valueOf(System.getenv("PORT"))));
 
             while (true) {
-                Socket socket = null;
-                socket = ss.accept();
-                System.out.println("Accepted connection from " + socket);
+                try {
+                    Socket socket = null;
+                    socket = ss.accept();
+                    System.out.println("Accepted connection from " + socket);
 
-                DataInputStream dis = new DataInputStream(socket.getInputStream());
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                    DataInputStream dis = new DataInputStream(socket.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
-                Server.sessions.add(new UserSession(socket, dos, dis));
+                    Server.sessions.add(new UserSession(socket, dos, dis));
 
-                Server.sessions.get(Server.sessions.size()-1).start();
+                    Server.sessions.get(Server.sessions.size() - 1).start();
 
-                //socket.close();
+                    //socket.close();
+                }
+                catch (EOFException e) {
+                    e.printStackTrace();
+                }
             }
         }
         catch (Exception e){
