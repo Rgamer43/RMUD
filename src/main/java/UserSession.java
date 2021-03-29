@@ -11,7 +11,7 @@ public class UserSession extends Thread implements Serializable {
 
     public Player player;
 
-    public UserSession(Socket s, DataOutputStream o, DataInputStream i) throws IOException {
+    public UserSession(Socket s) throws IOException {
         socket = s;
         oos = new ObjectOutputStream(s.getOutputStream());
         ois = new ObjectInputStream(s.getInputStream());

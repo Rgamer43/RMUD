@@ -17,10 +17,7 @@ public class ConnectionAccepter extends Thread{
                     socket = ss.accept();
                     System.out.println("Accepted connection from " + socket);
 
-                    DataInputStream dis = new DataInputStream(socket.getInputStream());
-                    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-
-                    Server.sessions.add(new UserSession(socket, dos, dis));
+                    Server.sessions.add(new UserSession(socket));
 
                     Server.sessions.get(Server.sessions.size() - 1).start();
 
