@@ -23,7 +23,7 @@ public class ConnectionAccepter extends Thread{
 
                     //socket.close();
                 }
-                catch (EOFException e) {
+                catch (Exception e) {
                     e.printStackTrace();
                 }
             }
