@@ -29,10 +29,11 @@ public class Client {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         socket = new Socket("warm-retreat-76151.herokuapp.com", 80); //Local IP: 192.168.4.22
-        //System.out.println("Connecting...");
+        System.out.println("Connecting...");
 
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
+        System.out.println("Got ObjectStreams");
 
         initGraphics();
 
