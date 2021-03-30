@@ -23,7 +23,6 @@ public class Server {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("Started server");
-        ca.start();
         //AccountManager.load();
 
         generateDungeon();
@@ -35,6 +34,8 @@ public class Server {
                 thread.start();
             }
         }
+
+        ca.start();
     }
 
     public static int getUserSessionID(Player p) {
