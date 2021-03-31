@@ -33,7 +33,6 @@ public class Client {
         System.out.println("Socket is connected: " + socket.isConnected());
 
         oos = new ObjectOutputStream(socket.getOutputStream());
-        oos.writeObject("test");
         ois = new ObjectInputStream(socket.getInputStream());
         System.out.println("Got ObjectStreams");
 
