@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Client {
 
+    public static volatile String ip;
     public static Socket socket;
 
     public static ObjectOutputStream oos;
@@ -28,15 +29,17 @@ public class Client {
     public static boolean graphicsInitted = false;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        socket = new Socket("warm-retreat-76151.herokuapp.com", 80); //Local IP: 192.168.4.22
-        System.out.println("Connecting...");
-        System.out.println("Socket is connected: " + socket.isConnected());
+        initGraphics();
+        print("Welcome to RMUD");
+        print("Please enter server ip");
+
+        while (ip == null) {}
+
+        print("Connecting to " + ip);
+        socket = new Socket(ip, 7777); //Local IP: 192.168.4.22
 
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
-        System.out.println("Got ObjectStreams");
-
-        initGraphics();
 
         Thread sendInput = new Thread(new Runnable() {
             @Override
@@ -106,13 +109,7 @@ public class Client {
                                 strInPaused = false;
                             } else {
                                 if (graphicsInitted) {
-                                    String[] lines = msg.split("\n");
-                                    for (int y = 0; y < lines.length; y++) {
-                                        for (int x = 1; x < msgLabels.length; x++) {
-                                            msgLabels[x - 1].setText(msgLabels[x].getText());
-                                        }
-                                        msgLabels[msgLabels.length - 1].setText(lines[y]);
-                                    }
+                                    print(msg);
                                 }
                                 //else System.out.println(msg);
                             }
@@ -199,6 +196,16 @@ public class Client {
 //        System.out.println(di.getHeight());
     }
 
+    public static void print(String msg) {
+        String[] lines = msg.split("\n");
+        for (int y = 0; y < lines.length; y++) {
+            for (int x = 1; x < msgLabels.length; x++) {
+                msgLabels[x - 1].setText(msgLabels[x].getText());
+            }
+            msgLabels[msgLabels.length - 1].setText(lines[y]);
+        }
+    }
+
 }
 
 class EnterListener extends KeyAdapter {
@@ -208,11 +215,17 @@ class EnterListener extends KeyAdapter {
 
         //Check if enter key is pressed
         if (ch == KeyEvent.VK_ENTER) {
-            try {
-                Client.oos.writeObject(Client.textField.getText());
+            if (Client.ip == null) {
+                Client.ip = Client.textField.getText();
                 Client.textField.setText("");
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            else {
+                try {
+                    Client.oos.writeObject(Client.textField.getText());
+                    Client.textField.setText("");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

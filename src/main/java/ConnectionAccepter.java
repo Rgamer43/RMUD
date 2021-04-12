@@ -7,9 +7,7 @@ import java.net.*;
 public class ConnectionAccepter extends Thread{
     public void run() {
         try {
-            ServerSocket ss = new ServerSocket(Integer.valueOf(System.getenv("PORT")));
-            System.out.println("PORT is " + System.getenv("PORT"));
-            //ss.bind(new InetSocketAddress(ss.getInetAddress(), Integer.valueOf(System.getenv("PORT"))));
+            ServerSocket ss = new ServerSocket(7777);
 
             while (true) {
                 try {
