@@ -2,6 +2,11 @@ import java.io.*;
 
 public class PlayerSaveManager {
 
+    static PlayerClass[] classes = new PlayerClass[]{
+            new Fighter(),
+            new Wizard()
+    };
+
     public static Player load(PlayerSave save) throws EOFException {
         try {
             Player p = new Player();
@@ -23,6 +28,7 @@ public class PlayerSaveManager {
             p.absc[4].value = save.absc[4];
             p.absc[5].value = save.absc[5];
             p.alias = p.name;
+            p.pClass = classes[save.pClass];
 
             if(p.location >= Server.townSize) p.location = 2;
 
@@ -55,6 +61,10 @@ public class PlayerSaveManager {
             save.absc[3] = p.absc[3].value;
             save.absc[4] = p.absc[4].value;
             save.absc[5] = p.absc[5].value;
+
+            for (int x = 0; x < classes.length; x++)
+                if (p.pClass.name.equals(classes[x].name))
+                    save.pClass = x;
 
             if(save.location >= Server.townSize) save.location = 2;
 

@@ -72,7 +72,7 @@ public class Server {
                         new Weapon("Mace", "Mace", 0, 1, new int[]{5,10},0,"mc"),
                         new Weapon("Spiked Club", "Spiked Club", 0, 3, new int[]{4,8},0,"spcl"),
                         new Weapon("Scimitar", "Scimitar", 0, 1, new int[]{2,6},0,"sci"),
-                        new Coin50(), new Coin50()}
+                        new Coin50(), new Coin50(), new BearTotem()}
                 ),
                 new Theme(
                         new String[]{"grimy","smelly","rotten","dark","putrid","bloody","wartorn","chaotic","messy"},
@@ -80,7 +80,7 @@ public class Server {
                         new Monster[]{new OrcChief(-1), new OrcWarlord(-1)},
                         new Item[]{new Greatsword(), new Weapon("Orc Greatsword", "", 0, 4, new int[]{5,8},0,"ogs"),
                                 new Weapon("Orc Scimitar", "", 0, 2, new int[]{4,6},0,"osc"), new HealingPotion(),
-                        new Coin50()}
+                        new Coin50(), new CureWounds()}
                 )
         };
 

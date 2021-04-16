@@ -23,6 +23,7 @@ public class Client {
     public static JTextField textField;
     public static JTextArea roomLabel;
     public static JLabel hpHUD;
+    public static JLabel manaHUD;
 
     public static Font defaultFont = new Font("Monospaced", Font.PLAIN, 9);
 
@@ -31,7 +32,7 @@ public class Client {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         initGraphics();
         print("Welcome to RMUD");
-        print("Please enter server ip");
+        print("Please enter server ip (use localhost if running the server on this computer)");
 
         while (ip == null) {}
 
@@ -93,6 +94,8 @@ public class Client {
                                 roomLabel.setText(msg);
                             } else if (args[0].equals("setHPHUD")) {
                                 hpHUD.setText("HP: " + args[1]);
+                            } else if (args[0].equals("setManaHUD")) {
+                                manaHUD.setText("Mana: " + args[1]);
                             } else if (args[0].equals("psIncoming")) {
                                 strInPaused = true;
 
@@ -176,11 +179,19 @@ public class Client {
 
         hpHUD = new JLabel();
         hpHUD.setFont(defaultFont);
-        hpHUD.setBounds(700, 310, 680, 290);
+        hpHUD.setBounds(700, 310, 680, 10);
         hpHUD.setBackground(Color.black);
         hpHUD.setOpaque(true);
         hpHUD.setForeground(Color.white);
         jFrame.add(hpHUD);
+
+        manaHUD = new JLabel();
+        manaHUD.setFont(defaultFont);
+        manaHUD.setBounds(700, 321, 680, 10);
+        manaHUD.setBackground(Color.black);
+        manaHUD.setOpaque(true);
+        manaHUD.setForeground(Color.white);
+        jFrame.add(manaHUD);
 
         jFrame.setSize(1375, 775);
         jFrame.setLayout(null);
@@ -215,6 +226,8 @@ class EnterListener extends KeyAdapter {
 
         //Check if enter key is pressed
         if (ch == KeyEvent.VK_ENTER) {
+            Client.print("Input: " + Client.textField.getText());
+
             if (Client.ip == null) {
                 Client.ip = Client.textField.getText();
                 Client.textField.setText("");

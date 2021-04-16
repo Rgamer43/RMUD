@@ -12,4 +12,5 @@ public class PlayerSave implements Serializable {
     public int hp;
     public int ac;
     public int[] absc;
+    public int pClass;
 }

@@ -1,11 +1,18 @@
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Player extends Entity implements Serializable {
 
     public String username;
 
     public PlayerClass pClass;
+
+    public int mana;
+    public int maxMana;
+
+    public ArrayList<Artifact> activeArtifacts = new ArrayList<>();
+    public boolean abilityActive = false;
 
     public void onDeath(Entity killer) throws IOException {
         for (int x = 0; x < Server.locations[location].occupants.size(); x++) {

@@ -11,6 +11,8 @@ public class UserSession extends Thread implements Serializable {
 
     public Player player;
 
+    public boolean loggingOut = false;
+
     public UserSession(Socket s) throws IOException {
         socket = s;
         oos = new ObjectOutputStream(s.getOutputStream());
@@ -56,6 +58,7 @@ public class UserSession extends Thread implements Serializable {
 
         Fighter f = new Fighter();
         oos.writeObject(f.name + ": " + f.desc);
+        oos.writeObject("Special Ability: " + f.abilityDesc);
         oos.writeObject("Starts with:");
         oos.writeObject("  STR: " + f.absc[0]);
         oos.writeObject("  DEX: " + f.absc[1]);
@@ -66,6 +69,7 @@ public class UserSession extends Thread implements Serializable {
 
         Wizard w = new Wizard();
         oos.writeObject(w.name + ": " + w.desc);
+        oos.writeObject("Special Ability: " + w.abilityDesc);
         oos.writeObject("Starts with:");
         oos.writeObject("  STR: " + w.absc[0]);
         oos.writeObject("  DEX: " + w.absc[1]);
@@ -155,13 +159,36 @@ public class UserSession extends Thread implements Serializable {
 
         oos.writeObject("setHPHUD " + player.hp + "/" + player.maxHp);
 
+        player.maxMana = 100 + (10 * player.absc[3].value);
+        player.mana = player.maxMana;
+        oos.writeObject("setManaHUD " + player.mana + "/" + player.maxMana);
+
+        Thread manaRegen = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(socket.isConnected()) {
+                    try {
+                        if (player.mana < player.maxMana && !loggingOut) {
+                            Thread.sleep(1000);
+                            oos.writeObject("setManaHUD " + player.mana + "/" + player.maxMana);
+                            player.mana++;
+                        }
+                        player.maxMana = 100 + (10 * player.absc[3].value);
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        manaRegen.start();
+
         while (true) {
             update();
         }
     }
 
     public void update() throws IOException, ClassNotFoundException {
-        resolveInput((String) ois.readObject());
+        if (!loggingOut) resolveInput((String) ois.readObject());
     }
 
     public void resolveInput(String i) throws IOException {
@@ -169,7 +196,9 @@ public class UserSession extends Thread implements Serializable {
 
         if (input.length > 0) {
 
-            if (input[0].equals("help")) {
+            if (i.equalsIgnoreCase("help ability")) oos.writeObject(player.pClass.abilityDesc);
+
+            else if (input[0].equals("help")) {
                 if(input.length > 1) {
                     if (input[1].equals("cmds")) oos.writeObject(Help.cmds);
                     else if (input[1].equals("stats")) oos.writeObject(Help.stats);
@@ -342,6 +371,8 @@ public class UserSession extends Thread implements Serializable {
                 logOut();
             }
 
+            else if (input[0].equals("ability")) player.pClass.ability(player);
+
             else if(!Server.locations[player.location].resolveInput(player, input)) {
                 oos.writeObject("Didn't recognize command");
             }
@@ -349,6 +380,13 @@ public class UserSession extends Thread implements Serializable {
     }
 
     public void logOut() throws IOException {
+        loggingOut = true;
+
+        for (int x = 0; x < player.activeArtifacts.size(); x++)
+            player.activeArtifacts.get(x).onLogout(player);
+
+        if (player.abilityActive) player.pClass.onLogout(player);
+
         oos.writeObject("psIncoming");
         oos.writeObject(PlayerSaveManager.save(player));
         oos.writeObject("logOut");

@@ -2,7 +2,8 @@ public class Help {
     public static String generic = "The following commands will give more specific help: \n" +
                                    "    [help cmds] - lists all general commands. These can be used anywhere. \n" +
                                    "    [help stats] - displays what each stat does. \n" +
-                                   "    [help aliases] - displays help about aliases.";
+                                   "    [help aliases] - displays help about aliases. \n" +
+                                   "    [help ability] - displays info about your class ability";
 
     public static String cmds = " The following commands can be used anywhere: \n" +
                                 "   [help <section>] - displays help message for specified section. Leave out section \n" +
@@ -18,8 +19,9 @@ public class Help {
                                 "   [stats] - displays your ability scores" +
                                 "   [use <item>] - activates specified item \n" +
                                 "   [enter <location>] - enter a location that has an exit to your current location \n" +
-                                "   [logout] - logs out of RMUD and quits application. PLEASE use this instead of just quitting \n" +
-                                "       the application.";
+                                "   [logout] - logs out of RMUD and quits the application. PLEASE use this instead of just quitting \n" +
+                                "       the application. \n" +
+                                "   [ability] - activates your class ability";
 
     public static String stats = "There are 6 stats in the game, each with a different function: \n" +
                                 "   STR - Affects attack bonuses and damage on some weapons \n" +
