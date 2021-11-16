@@ -2,6 +2,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class Location implements Serializable {
@@ -18,8 +19,11 @@ public class Location implements Serializable {
 
     public void enter(Player p, boolean displayLeave) throws IOException {
          if (displayLeave) for (int x = 0; x < Server.locations[p.location].occupants.size(); x++)
-            Server.getUserSession(Server.locations[p.location].occupants.get(x)).oos.writeObject(
-                    p.name + " leaves the location, moving into " + name);
+            try { Server.getUserSession(Server.locations[p.location].occupants.get(x)).oos.writeObject(
+                    p.name + " leaves the location, moving into " + name); }
+            catch (SocketException e) {
+
+            }
         Server.locations[p.location].occupants.remove(p);
         occupants.add(p);
         for (int x = 0; x < occupants.size(); x++)
@@ -108,5 +112,9 @@ public class Location implements Serializable {
         }
 
         return s;
+    }
+
+    public void AddExit(int i) {
+        if(!exits.contains(i)) exits.add(i);
     }
 }

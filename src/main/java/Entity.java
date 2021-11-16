@@ -60,11 +60,11 @@ public class Entity implements Serializable {
 
         for (int x = 0; x < Server.locations[location].occupants.size(); x++) {
             Player p = Server.locations[location].occupants.get(x);
-            Server.getUserSession(p).oos.writeUTF(e.name + " hits " + name + " for " + d +
+            Server.getUserSession(p).oos.writeObject(e.name + " hits " + name + " for " + d +
                     " damage using " + e.weapon.name + ". " + name +" is now at " + hp + "/" + maxHp + " HP");
         }
 
-        if (this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeUTF("setHPHUD " + hp + "/" + maxHp);
+        if (this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeObject("setHPHUD " + hp + "/" + maxHp);
 
         if (hp == 0) onDeath(e);
     }
@@ -76,11 +76,11 @@ public class Entity implements Serializable {
             int damage = random.nextInt(weapon.damage[1] + 1 - weapon.damage[0]) + weapon.damage[0];
             if (atk == 20) {
                 damage *= 2;
-                if(this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeUTF("Critical Hit!");
+                if(this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeObject("Critical Hit!");
             }
             target.takeDamage(this, damage);
         }
-        else if(this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeUTF("Attack missed");
+        else if(this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeObject("Attack missed");
     }
 
     public void onDeath(Entity killer) throws IOException {
@@ -92,8 +92,8 @@ public class Entity implements Serializable {
         if (hp > maxHp) hp = maxHp;
 
         if (this.getClass() == Player.class)
-            Server.getUserSession((Player) this).oos.writeUTF("Healed " + amount + " HP");
-        if (this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeUTF("setHPHUD " + hp + "/" + maxHp);
+            Server.getUserSession((Player) this).oos.writeObject("Healed " + amount + " HP");
+        if (this.getClass() == Player.class) Server.getUserSession((Player) this).oos.writeObject("setHPHUD " + hp + "/" + maxHp);
     }
 
 }

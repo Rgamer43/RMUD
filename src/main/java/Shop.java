@@ -27,7 +27,7 @@ public class Shop {
                 text += " - +" + a.acb + " AC";
             }
 
-            dos.writeUTF(text);
+            dos.writeObject(text);
         }
     }
 

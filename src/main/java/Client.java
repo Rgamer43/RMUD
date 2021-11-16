@@ -36,8 +36,12 @@ public class Client {
 
         while (ip == null) {}
 
+        if(ip.equals("localhost")) ip = "localhost:7778";
+
+        String[] s = ip.split(":");
+
         print("Connecting to " + ip);
-        socket = new Socket(ip, 7777); //Local IP: 192.168.4.22
+        socket = new Socket(s[0], Integer.parseInt(s[1])); //Local IP: 192.168.4.22
 
         oos = new ObjectOutputStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
@@ -71,8 +75,15 @@ public class Client {
                 }
                 while (true){
                     try {
-                        if (!strInPaused) {
-                            String msg = (String) ois.readObject();
+                        if (true) {
+                            String msg;
+                            try {
+                                msg = (String) ois.readObject();
+                            }
+                            catch (OptionalDataException e) {
+                                msg = ois.readUTF();
+                            }
+
                             String[] args = msg.split(" ");
 
                             Thread.sleep(20);

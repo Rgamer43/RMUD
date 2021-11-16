@@ -149,12 +149,13 @@ public class Server {
                 r.alias = new String().valueOf(r.id);
 
                 if (x == prevLocs + dungeonSize-1 && floor != floors-1)
-                    r.exits.add(x+1);
+                    r.AddExit(x+1);
 
                 locations[x] = r;
 
                 if (x == prevLocs && floors > 0)
-                    r.exits.add(x-1);
+                    if(r.id != 6) r.AddExit(x-1);
+                    else r.AddExit(2);
 
 //                System.out.println("Finished generating room " + x);
             }
@@ -166,7 +167,7 @@ public class Server {
                     if (x == townSize && y == 0) locations[x].exits.add(2);
                     else {
                         int z = random.nextInt(dungeonSize) + prevLocs;
-                        locations[x].exits.add(z);
+                        locations[x].AddExit(z);
                         locations[locations[x].exits.get(locations[x].exits.size() - 1)].exits.add(x);
                     }
                 }
@@ -174,6 +175,9 @@ public class Server {
 
             System.out.println("Finished generating floor " + floor);
         }
+
+        locations[townSize].exits.remove(1);
+//        System.out.println(locations[townSize].exits.toString());
 
         System.out.println("Finished generating dungeon");
     }

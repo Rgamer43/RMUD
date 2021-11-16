@@ -33,4 +33,7 @@ public class Help {
 
     public static String aliases = "Alaises are shorter versions of names. they are the thing in parantheses after a \n" +
                                    "name. Use them in place of something's name";
+
+    public static String intro = "How To Play: Look through the other help menus (run help to see them). Enter the \n" +
+            "dungeon  and slay monsters in order to get gold. Purchase ability crystals from the alchemist to increase your stats.";
 }

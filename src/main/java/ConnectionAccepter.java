@@ -7,7 +7,7 @@ import java.net.*;
 public class ConnectionAccepter extends Thread{
     public void run() {
         try {
-            ServerSocket ss = new ServerSocket(7777);
+            ServerSocket ss = new ServerSocket(7778);
 
             while (true) {
                 try {

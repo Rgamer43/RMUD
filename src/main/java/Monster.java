@@ -52,14 +52,14 @@ public class Monster extends Entity implements Runnable {
     @Override
     public void onDeath(Entity killer) throws IOException {
         if (killer.getClass() == Player.class) {
-            Server.getUserSession((Player) killer).oos.writeObject("You slayed the " + name);
             Player p = (Player) killer;
             Random random = new Random();
-            Double g = (double) gold;
-            g *= random.nextInt(5)/3.0;
-            gold = g.intValue();
-            p.gold += gold;
-            Server.getUserSession(p).oos.writeObject("You gained " + gold + " gold from the " + name);
+            if(!name.contains("Corpse")) {
+                Server.getUserSession((Player) killer).oos.writeObject("You slayed the " + name);
+                Double g = (double) gold * random.nextInt(5) / 3.0;
+                p.gold += g;
+                Server.getUserSession(p).oos.writeObject("You gained " + gold + " gold from the " + name);
+            }
             PlayerSaveManager.save(p);
         }
     }

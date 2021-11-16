@@ -1,5 +1,6 @@
 import java.net.Socket;
 import java.io.*;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 public class UserSession extends Thread implements Serializable {
@@ -187,7 +188,7 @@ public class UserSession extends Thread implements Serializable {
         }
     }
 
-    public void update() throws IOException, ClassNotFoundException {
+    public void update() throws IOException, ClassNotFoundException, SocketException {
         if (!loggingOut) resolveInput((String) ois.readObject());
     }
 
@@ -203,6 +204,7 @@ public class UserSession extends Thread implements Serializable {
                     if (input[1].equals("cmds")) oos.writeObject(Help.cmds);
                     else if (input[1].equals("stats")) oos.writeObject(Help.stats);
                     else if(input[1].equals("aliases")) oos.writeObject(Help.aliases);
+                    else if(input[1].equals("intro")) oos.writeObject(Help.intro);
                     else {
                         oos.writeObject("Didn't recognize help command. Printing generic help.");
                         oos.writeObject(Help.generic);
