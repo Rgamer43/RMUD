@@ -35,18 +35,18 @@ public class Shop {
         ObjectOutputStream dos = Server.getUserSession(p).oos;
         for (int x = 0; x < items.size(); x++) {
             if (items.get(x).name.toLowerCase().equals(name) || items.get(x).alias.toLowerCase().equals(name)) {
-                if (p.gold < items.get(x).price) dos.writeUTF(items.get(x).name + " costs " +
+                if (p.gold < items.get(x).price) dos.writeObject(items.get(x).name + " costs " +
                         items.get(x).price + " gold. You need " + (items.get(x).price - p.gold) + " more gold.");
                 else {
                     p.gold -= items.get(x).price;
                     p.inventory.add(items.get(x));
-                    dos.writeUTF("Purchased " + items.get(x).name + " for " + items.get(x).price + " gold");
+                    dos.writeObject("Purchased " + items.get(x).name + " for " + items.get(x).price + " gold");
                     PlayerSaveManager.save(p);
                 }
 
                 break;
             }
-            else if (x == items.size()-1) dos.writeUTF("Item not found");
+            else if (x == items.size()-1) dos.writeObject("Item not found");
         }
     }
 }

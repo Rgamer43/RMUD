@@ -21,7 +21,7 @@ public class Help {
                                 "   [enter <location>] - enter a location that has an exit to your current location \n" +
                                 "   [logout] - logs out of RMUD and quits the application. PLEASE use this instead of just quitting \n" +
                                 "       the application. \n" +
-                                "   [ability] - activates your class ability";
+                                "   [ability] - activates your class ability \n";
 
     public static String stats = "There are 6 stats in the game, each with a different function: \n" +
                                 "   STR - Affects attack bonuses and damage on some weapons \n" +
