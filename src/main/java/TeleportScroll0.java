@@ -9,7 +9,7 @@ public class TeleportScroll0 extends Item{
 
     @Override
     public void onActivate(Player p) throws IOException {
-        Server.getUserSession(p).oos.writeUTF("You read the scroll and begin to teleport...");
+        Server.getUserSession(p).oos.writeObject("You read the scroll and begin to teleport...");
         Server.locations[0].enter(p, true);
     }
 }

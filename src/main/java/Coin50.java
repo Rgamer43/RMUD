@@ -10,7 +10,7 @@ public class Coin50 extends Item {
     @Override
     public void onActivate(Player p) throws IOException {
         p.gold += 50;
-        Server.getUserSession(p).oos.writeUTF("Coin converted!");
+        Server.getUserSession(p).oos.writeObject("Coin converted!");
 
         p.inventory.remove(this);
     }

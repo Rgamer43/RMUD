@@ -24,6 +24,6 @@ public class Item implements Serializable {
     }
 
     public void onActivate(Player p) throws IOException {
-        Server.getUserSession(p).oos.writeUTF(name + " cannot be activated");
+        Server.getUserSession(p).oos.writeObject(name + " cannot be activated");
     }
 }
